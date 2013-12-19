@@ -4,8 +4,6 @@ import grails.util.GrailsUtil
 import org.codehaus.groovy.grails.commons.GrailsApplication
 
 import com.grailsrocks.authentication.AuthenticatedUser
-import com.grailsrocks.authentication.LoginForm
-import com.grailsrocks.authentication.SignupForm
 
 class AuthenticationController {
 
@@ -97,3 +95,34 @@ class AuthenticationController {
 	}
 }
 
+class LoginForm {
+
+	String login
+	String password
+	
+	boolean rememberMe
+	
+	static constraints = {
+		login(size:4..40, nullable: false, blank:false)
+		password(size:6..40, password:true, nullable: false, blank:false)
+	}
+
+}
+
+class SignupForm {
+
+	String login
+	String email
+	String password
+	String passwordConfirm
+	
+	boolean rememberMe
+	
+	static constraints = {
+		login(size:6..40, blank:false, nullable: false)
+		email(email:true, size:6..40, blank:false, nullable: false)
+		password(size:6..40, password:true, blank:false, nullable: false)
+		passwordConfirm(password:true, validator: { val, obj -> obj.password == val })
+	}
+
+}
